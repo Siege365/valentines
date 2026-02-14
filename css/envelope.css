@@ -467,9 +467,18 @@
 /* Tablet portrait */
 @media (max-width: 768px) {
   .envelope-container { width: min(420px, 82vw); height: min(295px, 54vw); }
-  .letter { width: min(370px, 84vw); min-height: auto; padding: 40px 28px; }
+  .letter { width: min(370px, 84vw); min-height: auto; padding: 36px 26px; }
   .wax-seal { width: 70px; height: 70px; }
   .wax-seal__icon { font-size: 24px; }
+
+  .scene.act-letter .letter {
+    transform: translate(-50%, -54%) scale(1);
+  }
+
+  .scene.act-letter .envelope-container {
+    transform: translateY(min(120px, 16vh)) scale(0.45);
+    opacity: 0.1;
+  }
 }
 
 /* Large phones */
@@ -478,13 +487,31 @@
   .letter { 
     width: min(330px, 90vw); 
     min-height: auto; 
-    padding: 36px 22px; 
+    padding: 30px 20px; 
   }
   .wax-seal { width: 62px; height: 62px; }
   .wax-seal__icon { font-size: 22px; }
   .letter__corner { width: 20px; height: 20px; }
   .envelope__hint { font-size: 18px; bottom: -34px; }
   .letter__close { width: 30px; height: 30px; top: 10px; right: 10px; }
+
+  .scene.act-letter .letter {
+    transform: translate(-50%, -58%) scale(1);
+  }
+
+  .scene.act-letter .envelope-container {
+    transform: translateY(min(90px, 14vh)) scale(0.4);
+    opacity: 0.08;
+  }
+
+  .letter__inner-frame { inset: 14px; }
+  .letter__corner--tl { top: 10px; left: 10px; }
+  .letter__corner--tr { top: 10px; right: 10px; }
+  .letter__corner--bl { bottom: 10px; left: 10px; }
+  .letter__corner--br { bottom: 10px; right: 10px; }
+  .letter__divider { margin: 14px auto; }
+  .letter__footer { margin-top: 16px; }
+  .letter__signature { margin-top: 12px; }
 }
 
 /* Small phones */
@@ -493,10 +520,24 @@
   .letter { 
     width: 92vw; 
     min-height: auto; 
-    padding: 30px 18px; 
+    padding: 26px 16px; 
   }
   .wax-seal { width: 54px; height: 54px; }
   .wax-seal__icon { font-size: 18px; }
+
+  .scene.act-letter .letter {
+    transform: translate(-50%, -60%) scale(1);
+  }
+
+  .scene.act-letter .envelope-container {
+    transform: translateY(min(70px, 12vh)) scale(0.35);
+    opacity: 0.06;
+  }
+
+  .letter__inner-frame { inset: 10px; }
+  .letter__divider { margin: 10px auto; }
+  .letter__footer { margin-top: 12px; font-size: 11px; letter-spacing: 8px; }
+  .letter__signature { margin-top: 8px; font-size: 14px; }
 }
 
 /* Short viewport (landscape phones) */
