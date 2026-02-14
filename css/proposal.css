@@ -76,16 +76,23 @@
 
 /* === NO Button === */
 .proposal__btn--no {
-  background: rgba(255,255,255,0.06);
-  color: rgba(232,180,184,0.55);
-  border: 1px solid rgba(232,180,184,0.2);
-  font-weight: 300;
+  background: rgba(232,180,184,0.2);
+  color: rgba(232,180,184,0.95);
+  border: 1px solid rgba(232,180,184,0.5);
+  font-weight: 400;
   font-size: 16px;
   padding: 9px 26px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  box-shadow: 
+    0 4px 12px rgba(0,0,0,0.3),
+    0 0 20px rgba(232,180,184,0.3);
 }
 
 .proposal__btn--no:hover {
-  background: rgba(255,255,255,0.08);
+  background: rgba(232,180,184,0.25);
+  box-shadow: 
+    0 6px 16px rgba(0,0,0,0.4),
+    0 0 24px rgba(232,180,184,0.4);
 }
 
 /* No button when it starts dodging — fixed position */

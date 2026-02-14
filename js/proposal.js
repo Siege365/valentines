@@ -115,7 +115,9 @@ const Proposal = (() => {
     const vh = window.innerHeight;
     const btnW = noBtn.offsetWidth || 80;
     const btnH = noBtn.offsetHeight || 36;
-    const pad = 20;
+    // Larger padding on mobile to keep button in safe tappable area
+    const isMobile = vw < 768;
+    const pad = isMobile ? Math.max(40, vw * 0.08) : 30;
 
     // Random position, avoiding the Yes button region
     let newX, newY;
@@ -123,8 +125,11 @@ const Proposal = (() => {
     let attempts = 0;
 
     do {
-      newX = pad + Math.random() * (vw - btnW - pad * 2);
-      newY = pad + Math.random() * (vh - btnH - pad * 2);
+      // Keep button well within viewport, especially on mobile
+      const safeW = Math.max(100, vw - btnW - pad * 2);
+      const safeH = Math.max(100, vh - btnH - pad * 2);
+      newX = pad + Math.random() * safeW;
+      newY = pad + Math.random() * safeH;
       attempts++;
     } while (
       attempts < 20 &&
