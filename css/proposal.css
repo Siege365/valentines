@@ -1,0 +1,325 @@
+/* ============================================
+   PROPOSAL — Yes/No buttons + Celebration
+   ============================================ */
+
+/* === Button Container === */
+.proposal {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 1s var(--ease-silk),
+    transform 1s var(--ease-silk);
+  pointer-events: none;
+  position: relative;
+  min-height: 50px;
+}
+
+.proposal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* === Shared Button Base === */
+.proposal__btn {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  padding: 10px 32px;
+  border-radius: 28px;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--ease-bounce),
+    box-shadow 0.3s ease,
+    background 0.3s ease,
+    opacity 0.3s ease;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* === YES Button === */
+.proposal__btn--yes {
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dark));
+  color: #1a0a2e;
+  font-weight: 600;
+  box-shadow:
+    0 4px 18px rgba(255,215,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+  animation: yesGlow 2.5s var(--ease-breathe) infinite alternate;
+}
+
+.proposal__btn--yes:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 6px 24px rgba(255,215,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+}
+
+.proposal__btn--yes:active {
+  transform: scale(0.96);
+}
+
+@keyframes yesGlow {
+  0%   { box-shadow: 0 4px 18px rgba(255,215,0,0.25), inset 0 1px 0 rgba(255,255,255,0.4); }
+  100% { box-shadow: 0 6px 28px rgba(255,215,0,0.5), 0 0 12px rgba(255,215,0,0.15), inset 0 1px 0 rgba(255,255,255,0.4); }
+}
+
+/* === NO Button === */
+.proposal__btn--no {
+  background: rgba(255,255,255,0.06);
+  color: rgba(232,180,184,0.55);
+  border: 1px solid rgba(232,180,184,0.2);
+  font-weight: 300;
+  font-size: 16px;
+  padding: 9px 26px;
+}
+
+.proposal__btn--no:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* No button when it starts dodging — fixed position */
+.proposal__btn--no.is-dodging {
+  position: fixed;
+  z-index: 250;
+  transition: none;
+  animation: noDodgeShake 0.3s var(--ease-bounce) forwards;
+}
+
+@keyframes noDodgeShake {
+  0%   { transform: scale(1) rotate(0deg); }
+  25%  { transform: scale(0.9) rotate(-8deg); }
+  50%  { transform: scale(0.85) rotate(6deg); }
+  75%  { transform: scale(0.9) rotate(-4deg); }
+  100% { transform: scale(0.88) rotate(0deg); }
+}
+
+/* Dodge count escalation — button shrinks */
+.proposal__btn--no.dodge-2 { font-size: 14px; padding: 7px 20px; }
+.proposal__btn--no.dodge-3 { font-size: 13px; padding: 6px 18px; opacity: 0.7; }
+.proposal__btn--no.dodge-4 { font-size: 12px; padding: 5px 14px; opacity: 0.5; }
+.proposal__btn--no.dodge-5 { font-size: 11px; padding: 4px 12px; opacity: 0.35; }
+
+/* Hide proposal after answer */
+.proposal.is-answered {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.9);
+  pointer-events: none;
+  transition: 
+    opacity 0.6s var(--ease-silk),
+    transform 0.6s var(--ease-silk);
+}
+
+/* ==========================================
+   CELEBRATION OVERLAY
+   ========================================== */
+.celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(45,15,60,0.92) 0%,
+    rgba(26,10,46,0.96) 50%,
+    rgba(6,0,15,0.98) 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(100%);
+  transition:
+    opacity 1.2s var(--ease-silk),
+    transform 1.8s var(--ease-dramatic);
+  overflow: hidden;
+}
+
+.celebration.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Background warm glow */
+.celebration::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(201,80,107,0.2) 0%, transparent 55%),
+    radial-gradient(ellipse at 70% 60%, rgba(212,165,116,0.15) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 30%, rgba(255,215,0,0.08) 0%, transparent 45%);
+  animation: celebBgPulse 4s var(--ease-breathe) infinite alternate;
+}
+
+@keyframes celebBgPulse {
+  0%   { transform: scale(1) rotate(0deg); opacity: 0.6; }
+  100% { transform: scale(1.15) rotate(3deg); opacity: 1; }
+}
+
+/* Main celebration text */
+.celebration__title {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(36px, 10vw, 72px);
+  background: linear-gradient(
+    135deg,
+    var(--gold-light) 0%,
+    var(--gold-bright) 30%,
+    var(--rose-gold) 60%,
+    var(--gold-bright) 80%,
+    var(--gold-light) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 3s linear infinite;
+  filter: drop-shadow(0 0 20px rgba(255,215,0,0.4));
+  z-index: 1;
+  text-align: center;
+  padding: 0 20px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition:
+    opacity 0.8s var(--ease-silk) 0.4s,
+    transform 1s var(--ease-bounce) 0.4s;
+}
+
+.celebration.is-active .celebration__title {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Sub message */
+.celebration__sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(16px, 4vw, 24px);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--rose-gold);
+  text-shadow: 0 0 18px rgba(232,180,184,0.3);
+  margin-top: 18px;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(15px);
+  transition:
+    opacity 1s var(--ease-silk) 1.2s,
+    transform 1s var(--ease-silk) 1.2s;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.celebration.is-active .celebration__sub {
+  opacity: 0.8;
+  transform: translateY(0);
+}
+
+/* Giant hearts behind text */
+.celebration__heart {
+  position: absolute;
+  font-size: var(--ch-size, 60px);
+  opacity: 0;
+  z-index: 0;
+  animation: celebHeartFloat var(--ch-dur, 4s) var(--ease-silk) var(--ch-delay, 0s) forwards;
+  pointer-events: none;
+}
+
+@keyframes celebHeartFloat {
+  0%   { opacity: 0; transform: translate(0, 30px) scale(0) rotate(-20deg); }
+  20%  { opacity: 0.7; transform: translate(0, 0) scale(1.1) rotate(5deg); }
+  80%  { opacity: 0.5; transform: translate(0, -40px) scale(0.95) rotate(-5deg); }
+  100% { opacity: 0.15; transform: translate(0, -80px) scale(0.7) rotate(10deg); }
+}
+
+/* Confetti pieces */
+.celebration__confetti {
+  position: absolute;
+  width: var(--cc-size, 10px);
+  height: var(--cc-size, 10px);
+  background: var(--cc-color, var(--gold-bright));
+  opacity: 0;
+  z-index: 0;
+  border-radius: var(--cc-radius, 2px);
+  animation: confettiFall var(--cc-dur, 3s) var(--ease-silk) var(--cc-delay, 0s) forwards;
+  pointer-events: none;
+}
+
+@keyframes confettiFall {
+  0%   { opacity: 0; transform: translate(0, -100px) rotate(0deg) scale(0); }
+  15%  { opacity: 1; transform: translate(var(--cc-dx, 20px), 0) rotate(180deg) scale(1); }
+  100% { opacity: 0; transform: translate(calc(var(--cc-dx, 20px) * 1.5), 100vh) rotate(720deg) scale(0.3); }
+}
+
+/* Sparkle ring burst around title */
+.celebration__spark {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-bright);
+  opacity: 0;
+  z-index: 1;
+  animation: celebSpark 1.2s var(--ease-bounce) var(--cs-delay, 0.5s) forwards;
+  pointer-events: none;
+}
+
+@keyframes celebSpark {
+  0%   { opacity: 0; transform: translate(0, 0) scale(0); }
+  40%  { opacity: 1; transform: translate(var(--cs-x), var(--cs-y)) scale(1.2); }
+  100% { opacity: 0; transform: translate(calc(var(--cs-x) * 1.5), calc(var(--cs-y) * 1.5)) scale(0); }
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (max-width: 480px) {
+  .proposal {
+    gap: 18px;
+    margin-top: 18px;
+  }
+  .proposal__btn--yes {
+    font-size: 16px;
+    padding: 9px 26px;
+  }
+  .proposal__btn--no {
+    font-size: 14px;
+    padding: 8px 20px;
+  }
+}
+
+@media (max-width: 360px) {
+  .proposal {
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .proposal__btn--yes {
+    font-size: 15px;
+    padding: 8px 22px;
+  }
+  .proposal__btn--no {
+    font-size: 13px;
+    padding: 7px 16px;
+  }
+}
+
+@media (max-height: 500px) {
+  .proposal {
+    margin-top: 10px;
+    gap: 12px;
+  }
+  .celebration__title {
+    font-size: clamp(28px, 8vw, 48px);
+  }
+}

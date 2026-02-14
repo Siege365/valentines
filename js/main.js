@@ -21,6 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const footer      = document.getElementById('letterFooter');
   const signature   = document.getElementById('letterSignature');
   const closeBtn    = document.getElementById('letterClose');
+  const proposalEl  = document.getElementById('proposal');
+  const btnYes      = document.getElementById('btnYes');
+  const btnNo       = document.getElementById('btnNo');
+  const celebrationEl = document.getElementById('celebration');
 
   /* ─── State ─── */
   let isOpen = false;           // envelope open state
@@ -35,6 +39,21 @@ document.addEventListener('DOMContentLoaded', () => {
   CursorTrail.init(cursorBox);
   FlowerGarden.init(gardenBox);
   BouquetDisplay.init(bouquetBox);
+  Proposal.init({
+    proposalEl,
+    yesBtn: btnYes,
+    noBtn: btnNo,
+    celebrationEl,
+    onYes: () => {
+      // Hide close button — the love letter stays open forever ♥
+      if (closeBtn) closeBtn.classList.remove('is-visible');
+      // Crank up the romantic atmosphere
+      FloatingHearts.stop();
+      FloatingHearts.start('intense');
+      PetalSystem.stop();
+      PetalSystem.start('intense');
+    }
+  });
 
   /* ─── Seal Burst Effect ─── */
   function burstSeal() {
@@ -159,6 +178,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 variance: 15,
               });
             }
+
+            // Show the Yes/No proposal buttons after signature
+            setTimeout(() => {
+              if (!Proposal.hasAnswered()) {
+                Proposal.show();
+              } else {
+                Proposal.launchCelebration();
+              }
+            }, 800);
           }, 1000);
 
           // Start floating hearts on first completion
@@ -204,6 +232,15 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }, 800);
 
+        // Show proposal buttons (or celebration) on reopen
+        setTimeout(() => {
+          if (!Proposal.hasAnswered()) {
+            Proposal.show();
+          } else {
+            Proposal.launchCelebration();
+          }
+        }, 1200);
+
         // Re-present bouquet on reopen
         setTimeout(() => {
           BouquetDisplay.present();
@@ -242,6 +279,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Retract flowers & bouquet
     FlowerGarden.retract();
     BouquetDisplay.retract();
+
+    // 3b. Hide proposal & celebration
+    Proposal.reset();
+    celebrationEl.classList.remove('is-active');
 
     // 4. Letter descends
     setTimeout(() => {
