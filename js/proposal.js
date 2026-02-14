@@ -20,6 +20,10 @@ const Proposal = (() => {
     '...',
     '🥺',
     'Just say yes!',
+    'Gara ay?!',
+    'SUGOT BA!',
+    'kinsa raman gud ko :<',
+    'K',
   ];
 
   const CONFETTI_COLORS = [
