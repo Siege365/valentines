@@ -1,0 +1,541 @@
+/* ============================================
+   BOUQUET — Romantic wrapped rose bouquet
+   rising from the bottom of the screen
+   ============================================ */
+
+/* === Bouquet Layer === */
+.bouquet-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* === Main Bouquet Container === */
+.bouquet {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 240px;
+  height: 390px;
+  transform: translateX(-50%) translateY(108%);
+  transition: transform 2.4s var(--ease-dramatic);
+  filter: drop-shadow(0 -6px 20px rgba(0,0,0,0.35));
+}
+
+.bouquet.is-presented {
+  transform: translateX(-50%) translateY(28%);
+}
+
+/* Gentle sway once resting */
+.bouquet.is-swaying {
+  animation: bouquetSway 7s var(--ease-breathe) infinite alternate;
+}
+
+.bouquet.is-retracting {
+  transform: translateX(-50%) translateY(108%);
+  transition: transform 1.6s var(--ease-silk);
+  animation: none !important;
+}
+
+@keyframes bouquetSway {
+  0%   { transform: translateX(-50%) translateY(28%) rotate(-1.2deg); }
+  33%  { transform: translateX(-50%) translateY(26%) rotate(0.3deg); }
+  66%  { transform: translateX(-50%) translateY(29%) rotate(-0.5deg); }
+  100% { transform: translateX(-50%) translateY(28%) rotate(1.2deg); }
+}
+
+/* === Wrapping Paper (cone / trapezoid) === */
+.bouquet__wrap {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  height: 62%;
+  clip-path: polygon(3% 0%, 97% 0%, 73% 100%, 27% 100%);
+  background:
+    linear-gradient(
+      150deg,
+      rgba(252, 210, 220, 0.96) 0%,
+      rgba(245, 185, 200, 0.94) 25%,
+      rgba(238, 165, 185, 0.92) 50%,
+      rgba(230, 150, 175, 0.93) 75%,
+      rgba(240, 175, 195, 0.95) 100%
+    );
+  overflow: hidden;
+}
+
+/* Diagonal crease lines on paper */
+.bouquet__wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      32deg,
+      transparent 0px, transparent 22px,
+      rgba(255,255,255,0.06) 22px, rgba(255,255,255,0.06) 23px
+    ),
+    repeating-linear-gradient(
+      -28deg,
+      transparent 0px, transparent 30px,
+      rgba(0,0,0,0.02) 30px, rgba(0,0,0,0.02) 31px
+    );
+}
+
+/* Glossy sheen streak */
+.bouquet__wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 28%;
+  width: 18%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.13), transparent);
+  transform: skewX(-12deg);
+}
+
+/* Paper fold accents along edges */
+.bouquet__fold {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 12%;
+  pointer-events: none;
+}
+
+.bouquet__fold--left {
+  left: 3%;
+  background: linear-gradient(90deg, rgba(0,0,0,0.06) 0%, transparent 100%);
+  clip-path: polygon(0 0, 100% 2%, 100% 98%, 0 100%);
+}
+
+.bouquet__fold--right {
+  right: 3%;
+  background: linear-gradient(-90deg, rgba(0,0,0,0.06) 0%, transparent 100%);
+  clip-path: polygon(0 2%, 100% 0, 100% 100%, 0 98%);
+}
+
+/* === Tissue Paper (crinkled edges above wrap) === */
+.bouquet__tissue {
+  position: absolute;
+  width: 80%;
+  height: 22%;
+  left: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%) translateY(10px);
+  transition:
+    opacity 0.8s var(--ease-silk),
+    transform 0.8s var(--ease-silk);
+}
+
+.bouquet.is-presented .bouquet__tissue {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.bouquet__tissue--1 {
+  top: 28%;
+  background:
+    radial-gradient(ellipse at 25% 100%, rgba(255,250,246,0.75) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 100%, rgba(255,248,242,0.65) 0%, transparent 50%);
+  clip-path: polygon(0% 35%, 12% 5%, 28% 30%, 42% 0%, 58% 22%, 72% 2%, 88% 28%, 100% 8%, 96% 100%, 4% 100%);
+  transform: translateX(-54%) rotate(-6deg) translateY(10px);
+  transition-delay: 0.3s;
+}
+
+.bouquet.is-presented .bouquet__tissue--1 {
+  transform: translateX(-54%) rotate(-6deg) translateY(0);
+}
+
+.bouquet__tissue--2 {
+  top: 30%;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(255,252,248,0.7) 0%, transparent 60%);
+  clip-path: polygon(4% 28%, 18% 0%, 36% 20%, 52% 3%, 68% 18%, 82% 0%, 96% 24%, 100% 100%, 0% 100%);
+  transform: translateX(-46%) rotate(4deg) translateY(10px);
+  transition-delay: 0.5s;
+}
+
+.bouquet.is-presented .bouquet__tissue--2 {
+  transform: translateX(-46%) rotate(4deg) translateY(0);
+}
+
+.bouquet__tissue--3 {
+  top: 31%;
+  width: 60%;
+  background: rgba(255,254,250,0.45);
+  clip-path: polygon(8% 15%, 24% 0%, 44% 18%, 60% 0%, 78% 12%, 94% 3%, 100% 100%, 0% 100%);
+  transform: translateX(-50%) rotate(1deg) translateY(10px);
+  transition-delay: 0.4s;
+}
+
+.bouquet.is-presented .bouquet__tissue--3 {
+  transform: translateX(-50%) rotate(1deg) translateY(0);
+}
+
+/* === Rose Cluster Container === */
+.bouquet__cluster {
+  position: absolute;
+  top: 2%;
+  left: 5%;
+  width: 90%;
+  height: 44%;
+}
+
+/* === Individual Bouquet Rose (top-down spiral) === */
+.bq-rose {
+  position: absolute;
+  width: var(--bq-size, 38px);
+  height: var(--bq-size, 38px);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition:
+    transform 0.9s var(--ease-bounce),
+    opacity 0.6s var(--ease-silk);
+}
+
+.bq-rose.is-bloomed {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* Outer petal ring — conic gradient simulating spiral */
+.bq-rose::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from var(--bq-rot, 0deg),
+    var(--bq-outer, #d42c4f) 0deg,
+    var(--bq-mid, #e85775) 36deg,
+    var(--bq-outer, #d42c4f) 72deg,
+    var(--bq-mid, #e85775) 108deg,
+    var(--bq-outer, #d42c4f) 144deg,
+    var(--bq-mid, #e85775) 180deg,
+    var(--bq-outer, #d42c4f) 216deg,
+    var(--bq-mid, #e85775) 252deg,
+    var(--bq-outer, #d42c4f) 288deg,
+    var(--bq-mid, #e85775) 324deg,
+    var(--bq-outer, #d42c4f) 360deg
+  );
+  box-shadow:
+    inset 0 0 8px rgba(0,0,0,0.2),
+    0 2px 6px rgba(0,0,0,0.12);
+}
+
+/* Inner tight spiral */
+.bq-rose::after {
+  content: '';
+  position: absolute;
+  inset: 24%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 42% 38%,
+    var(--bq-inner, #fcc5d0) 0%,
+    var(--bq-mid, #e85775) 55%,
+    var(--bq-outer, #d42c4f) 100%
+  );
+  box-shadow:
+    inset 2px 2px 5px rgba(0,0,0,0.14),
+    inset -1px -1px 3px rgba(255,200,200,0.2);
+  transform: rotate(calc(var(--bq-rot, 0deg) + 36deg));
+}
+
+/* Rose glow */
+.bq-rose.is-bloomed::before {
+  box-shadow:
+    inset 0 0 8px rgba(0,0,0,0.2),
+    0 2px 6px rgba(0,0,0,0.12),
+    0 0 14px var(--bq-glow, rgba(212,44,79,0.2));
+}
+
+/* === Bouquet Leaves === */
+.bouquet__leaf {
+  position: absolute;
+  width: var(--bl-w, 28px);
+  height: var(--bl-h, 13px);
+  background: linear-gradient(135deg, #4a9a4a 0%, #2d6a27 55%, #1e5518 100%);
+  border-radius: 0 80% 0 80%;
+  transform-origin: bottom center;
+  opacity: 0;
+  transform: scale(0) rotate(var(--bl-angle, -20deg));
+  transition:
+    opacity 0.6s var(--ease-silk),
+    transform 0.9s var(--ease-bounce);
+  box-shadow: inset -2px -1px 3px rgba(0,0,0,0.15);
+}
+
+.bouquet__leaf--mirror {
+  border-radius: 80% 0 80% 0;
+}
+
+.bouquet__leaf.is-visible {
+  opacity: 0.85;
+  transform: scale(1) rotate(var(--bl-angle, -20deg));
+}
+
+/* Leaf vein detail */
+.bouquet__leaf::after {
+  content: '';
+  position: absolute;
+  top: 42%;
+  left: 15%;
+  width: 60%;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  transform: rotate(-3deg);
+}
+
+/* === Baby's Breath Filler === */
+.bouquet__filler {
+  position: absolute;
+  width: var(--bf-size, 5px);
+  height: var(--bf-size, 5px);
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 35%, rgba(240,228,255,0.5) 100%);
+  box-shadow: 0 0 5px rgba(255,255,255,0.25);
+  opacity: 0;
+  transform: scale(0);
+  transition:
+    opacity 0.4s var(--ease-silk),
+    transform 0.5s var(--ease-bounce);
+}
+
+.bouquet__filler.is-visible {
+  opacity: 0.6;
+  transform: scale(1);
+}
+
+/* === Ribbon Bow === */
+.bouquet__bow-wrap {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 38px;
+}
+
+/* Bow loops (left & right) */
+.bouquet__bow-loop {
+  position: absolute;
+  top: 2px;
+  width: 30px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--gold-bright) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+  box-shadow:
+    inset 1px 1px 4px rgba(255,255,255,0.35),
+    inset -1px -1px 3px rgba(0,0,0,0.12),
+    0 2px 8px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: scale(0) rotate(var(--bow-rot, 0deg));
+  transition:
+    opacity 0.5s var(--ease-silk),
+    transform 0.8s var(--ease-bounce);
+}
+
+.bouquet__bow-loop--left {
+  left: 5px;
+  --bow-rot: -15deg;
+  transition-delay: 0.1s;
+}
+
+.bouquet__bow-loop--right {
+  right: 5px;
+  --bow-rot: 15deg;
+  transition-delay: 0.2s;
+}
+
+.bouquet.is-presented .bouquet__bow-loop {
+  opacity: 1;
+  transform: scale(1) rotate(var(--bow-rot, 0deg));
+}
+
+/* Center knot */
+.bouquet__bow-knot {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, var(--gold-bright), var(--gold) 55%, var(--gold-dark) 100%);
+  box-shadow:
+    0 1px 5px rgba(0,0,0,0.2),
+    inset 0 1px 3px rgba(255,255,255,0.3);
+  z-index: 2;
+  opacity: 0;
+  transition:
+    opacity 0.4s var(--ease-silk) 0.3s,
+    transform 0.6s var(--ease-bounce) 0.3s;
+}
+
+.bouquet.is-presented .bouquet__bow-knot {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Ribbon tails */
+.bouquet__bow-tail {
+  position: absolute;
+  bottom: -20px;
+  width: 9px;
+  border-radius: 0 0 5px 5px;
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition:
+    opacity 0.4s var(--ease-silk) 0.4s,
+    transform 0.9s var(--ease-bounce) 0.4s;
+}
+
+.bouquet__bow-tail--left {
+  left: 22px;
+  height: 32px;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 60%, rgba(184,134,11,0.5) 100%);
+  transform: scaleY(0) rotate(10deg);
+}
+
+.bouquet__bow-tail--right {
+  right: 22px;
+  height: 28px;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 60%, rgba(184,134,11,0.5) 100%);
+  transform: scaleY(0) rotate(-10deg);
+}
+
+.bouquet.is-presented .bouquet__bow-tail--left {
+  opacity: 0.8;
+  transform: scaleY(1) rotate(10deg);
+}
+
+.bouquet.is-presented .bouquet__bow-tail--right {
+  opacity: 0.8;
+  transform: scaleY(1) rotate(-10deg);
+}
+
+/* Horizontal ribbon band behind the bow */
+.bouquet__ribbon-band {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 40%, var(--gold-dark) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    inset 0 -1px 0 rgba(0,0,0,0.1),
+    0 2px 6px rgba(0,0,0,0.15);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-silk) 0.2s;
+  z-index: -1;
+}
+
+.bouquet.is-presented .bouquet__ribbon-band {
+  opacity: 0.85;
+}
+
+/* === Ambient Glow Behind Bouquet === */
+.bouquet__glow {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180%;
+  height: 60%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(212,165,116,0.1) 0%,
+    rgba(201,80,107,0.06) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.5s var(--ease-silk) 0.5s;
+}
+
+.bouquet.is-presented .bouquet__glow {
+  opacity: 1;
+  animation: bouquetGlow 4s var(--ease-breathe) infinite alternate;
+}
+
+@keyframes bouquetGlow {
+  0%   { opacity: 0.7; transform: translateX(-50%) scale(1); }
+  100% { opacity: 1;   transform: translateX(-50%) scale(1.1); }
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (min-width: 1200px) {
+  .bouquet {
+    width: 280px;
+    height: 430px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bouquet {
+    width: 200px;
+    height: 330px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bouquet {
+    width: 165px;
+    height: 280px;
+  }
+
+  .bouquet.is-presented {
+    transform: translateX(-50%) translateY(32%);
+  }
+
+  .bouquet.is-swaying {
+    animation-name: bouquetSwayMobile;
+  }
+
+  @keyframes bouquetSwayMobile {
+    0%   { transform: translateX(-50%) translateY(32%) rotate(-1deg); }
+    50%  { transform: translateX(-50%) translateY(30%) rotate(0.2deg); }
+    100% { transform: translateX(-50%) translateY(32%) rotate(1deg); }
+  }
+}
+
+@media (max-width: 360px) {
+  .bouquet {
+    width: 140px;
+    height: 240px;
+  }
+}
+
+@media (max-height: 500px) {
+  .bouquet {
+    width: 130px;
+    height: 210px;
+  }
+
+  .bouquet.is-presented {
+    transform: translateX(-50%) translateY(40%);
+  }
+}
+
+@media (max-height: 600px) and (min-height: 501px) {
+  .bouquet {
+    width: 170px;
+    height: 280px;
+  }
+
+  .bouquet.is-presented {
+    transform: translateX(-50%) translateY(35%);
+  }
+}

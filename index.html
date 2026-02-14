@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>For You ♥</title>
+
+  <!-- Preconnect for speed -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets (segregated) -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/envelope.css">
+  <link rel="stylesheet" href="css/particles.css">
+  <link rel="stylesheet" href="css/flowers.css">
+  <link rel="stylesheet" href="css/bouquet.css">
+  <link rel="stylesheet" href="css/typography.css">
+</head>
+<body>
+
+  <div class="scene" id="scene">
+
+    <!-- ═══ Canvas for fireflies & stardust ═══ -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- ═══ Cinematic background ═══ -->
+    <div class="scene__bg"></div>
+
+    <!-- ═══ Aurora waves ═══ -->
+    <div class="aurora" id="aurora">
+      <div class="aurora__wave aurora__wave--1"></div>
+      <div class="aurora__wave aurora__wave--2"></div>
+      <div class="aurora__wave aurora__wave--3"></div>
+    </div>
+
+    <!-- ═══ Cinematic letterbox bars ═══ -->
+    <div class="cinema-bar cinema-bar--top" id="cinemaTop"></div>
+    <div class="cinema-bar cinema-bar--bottom" id="cinemaBottom"></div>
+
+    <!-- ═══ Rose petals layer ═══ -->
+    <div class="petals-container" id="petalsContainer"></div>
+
+    <!-- ═══ Floating hearts layer ═══ -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- ═══ Center stage ═══ -->
+    <div class="stage" id="stage">
+
+      <!-- Envelope -->
+      <div class="envelope-container" id="envelopeContainer">
+        <div class="envelope" id="envelope">
+          <div class="envelope__body"></div>
+          <div class="envelope__flap" id="envelopeFlap"></div>
+
+          <!-- Wax seal (click to open) -->
+          <div class="wax-seal" id="waxSeal">
+            <div class="wax-seal__body">
+              <span class="wax-seal__icon">♥</span>
+            </div>
+          </div>
+        </div>
+        <span class="envelope__hint">tap the seal to open</span>
+      </div>
+
+      <!-- Letter card -->
+      <div class="letter" id="letter">
+        <!-- Close button -->
+        <button class="letter__close" id="letterClose" aria-label="Close">
+          <span class="letter__close-icon">✕</span>
+        </button>
+
+        <!-- Corner ornaments -->
+        <div class="letter__corner letter__corner--tl"></div>
+        <div class="letter__corner letter__corner--tr"></div>
+        <div class="letter__corner letter__corner--bl"></div>
+        <div class="letter__corner letter__corner--br"></div>
+        <div class="letter__inner-frame"></div>
+
+        <!-- Content -->
+        <div class="letter__content">
+          <h1 class="letter__title" id="letterTitle"></h1>
+          <div class="letter__divider" id="letterDivider"></div>
+          <p class="letter__message" id="letterMessage"></p>
+          <div class="letter__footer" id="letterFooter">♥ ♥ ♥</div>
+          <p class="letter__signature" id="letterSignature"></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ Flower garden layer ═══ -->
+    <div class="garden" id="gardenContainer"></div>
+
+    <!-- ═══ Bouquet display ═══ -->
+    <div class="bouquet-layer" id="bouquetLayer"></div>
+
+    <!-- ═══ Vignette overlay ═══ -->
+    <div class="vignette"></div>
+
+    <!-- ═══ Cursor sparkle trail ═══ -->
+    <div class="cursor-trail" id="cursorTrail"></div>
+
+  </div>
+
+  <!-- Scripts (segregated, order matters) -->
+  <script src="js/particles.js"></script>
+  <script src="js/petals.js"></script>
+  <script src="js/typewriter.js"></script>
+  <script src="js/hearts.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/flowers.js"></script>
+  <script src="js/bouquet.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

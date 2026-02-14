@@ -1,0 +1,243 @@
+/* ============================================
+   PARTICLES — Rose petals, floating hearts,
+   sparkle dots, seal burst, keyframes
+   ============================================ */
+
+/* === Rose Petals === */
+.petal {
+  position: absolute;
+  top: -60px;
+  width: var(--petal-size, 18px);
+  height: var(--petal-size, 18px);
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: petalFall var(--petal-duration, 8s) linear forwards;
+  opacity: 0;
+}
+
+.petal__shape {
+  width: 100%;
+  height: 100%;
+  border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+  background: var(--petal-color, var(--rose));
+  box-shadow: 
+    inset -2px -2px 4px rgba(0, 0, 0, 0.15),
+    inset 1px 1px 3px rgba(255, 255, 255, 0.2);
+  transform: rotate(var(--petal-rotate, 45deg));
+  animation: petalSpin var(--petal-spin-duration, 4s) linear infinite;
+}
+
+/* Petal vein detail */
+.petal__shape::after {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: 45%;
+  width: 1px;
+  height: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1px;
+  transform: rotate(-5deg);
+}
+
+@keyframes petalFall {
+  0% {
+    opacity: 0;
+    transform: 
+      translateX(0)
+      translateY(0)
+      rotateX(0deg)
+      rotateZ(0deg);
+  }
+  8% {
+    opacity: var(--petal-opacity, 0.8);
+  }
+  25% {
+    transform:
+      translateX(calc(var(--petal-sway, 80px) * 1))
+      translateY(25vh)
+      rotateX(90deg)
+      rotateZ(90deg);
+  }
+  50% {
+    transform:
+      translateX(calc(var(--petal-sway, 80px) * -0.5))
+      translateY(50vh)
+      rotateX(200deg)
+      rotateZ(180deg);
+  }
+  75% {
+    transform:
+      translateX(calc(var(--petal-sway, 80px) * 0.8))
+      translateY(75vh)
+      rotateX(310deg)
+      rotateZ(270deg);
+  }
+  92% {
+    opacity: var(--petal-opacity, 0.8);
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translateX(calc(var(--petal-sway, 80px) * -0.3))
+      translateY(110vh)
+      rotateX(400deg)
+      rotateZ(360deg);
+  }
+}
+
+@keyframes petalSpin {
+  0%   { transform: rotate(var(--petal-rotate, 45deg)) rotateY(0deg); }
+  100% { transform: rotate(var(--petal-rotate, 45deg)) rotateY(360deg); }
+}
+
+/* === Floating Hearts === */
+.floating-heart {
+  position: absolute;
+  bottom: -40px;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: heartFloat var(--heart-duration, 6s) var(--ease-silk) forwards;
+  opacity: 0;
+  font-size: var(--heart-size, 16px);
+  color: var(--heart-color, var(--rose));
+  filter: blur(var(--heart-blur, 0px));
+  text-shadow: 0 0 8px currentColor;
+}
+
+@keyframes heartFloat {
+  0% {
+    opacity: 0;
+    transform: translateX(0) translateY(0) scale(0.5) rotate(0deg);
+  }
+  10% {
+    opacity: var(--heart-opacity, 0.6);
+    transform: translateX(0) translateY(-5vh) scale(1) rotate(5deg);
+  }
+  30% {
+    transform: translateX(calc(var(--heart-sway, 30px))) translateY(-25vh) scale(1) rotate(-3deg);
+  }
+  60% {
+    transform: translateX(calc(var(--heart-sway, 30px) * -0.7)) translateY(-55vh) scale(0.95) rotate(5deg);
+  }
+  85% {
+    opacity: var(--heart-opacity, 0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(calc(var(--heart-sway, 30px) * 0.4)) translateY(-110vh) scale(0.6) rotate(-8deg);
+  }
+}
+
+/* === Seal Burst Particles === */
+.seal-particle {
+  position: absolute;
+  width: var(--sp-size, 6px);
+  height: var(--sp-size, 6px);
+  border-radius: 50%;
+  background: var(--gold-bright);
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: sealBurst 1s var(--ease-dramatic) forwards;
+  box-shadow: 0 0 8px var(--gold-bright), 0 0 16px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes sealBurst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: 
+      translate(
+        calc(var(--sp-x, 50px)),
+        calc(var(--sp-y, -50px))
+      ) 
+      scale(0);
+  }
+}
+
+/* Wax fragment particles */
+.wax-fragment {
+  position: absolute;
+  width: var(--wf-size, 8px);
+  height: var(--wf-size, 6px);
+  border-radius: 40%;
+  background: var(--wax-main);
+  pointer-events: none;
+  animation: waxShatter 0.8s var(--ease-dramatic) forwards;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+@keyframes waxShatter {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: 
+      translate(var(--wf-x, 30px), var(--wf-y, 40px))
+      rotate(var(--wf-rot, 180deg))
+      scale(0.3);
+  }
+}
+
+/* === Sparkle Dot (for cursor trail) === */
+.sparkle {
+  position: absolute;
+  width: var(--sparkle-size, 4px);
+  height: var(--sparkle-size, 4px);
+  border-radius: 50%;
+  background: var(--gold-bright);
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: sparkleFade var(--sparkle-life, 0.8s) var(--ease-silk) forwards;
+  box-shadow: 
+    0 0 6px var(--gold-bright),
+    0 0 12px rgba(255, 215, 0, 0.4);
+}
+
+@keyframes sparkleFade {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) translateY(var(--sparkle-drift, -20px));
+  }
+}
+
+/* Cross-shaped sparkle variant */
+.sparkle--cross {
+  background: transparent;
+  box-shadow: none;
+  width: var(--sparkle-size, 4px);
+  height: var(--sparkle-size, 4px);
+}
+
+.sparkle--cross::before,
+.sparkle--cross::after {
+  content: '';
+  position: absolute;
+  background: var(--gold-light);
+  border-radius: 2px;
+}
+
+.sparkle--cross::before {
+  width: 100%;
+  height: 1px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.sparkle--cross::after {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}

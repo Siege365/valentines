@@ -1,0 +1,69 @@
+/* ============================================
+   VARIABLES — The heartbeat of every color
+   ============================================ */
+
+:root {
+  /* === Night Sky Palette === */
+  --midnight:     #06000f;
+  --deep-plum:    #1a0a2e;
+  --royal-plum:   #2d1b4e;
+  --wine:         #6b1d3a;
+  --rose-deep:    #8b2252;
+  --rose:         #c9506b;
+  --blush:        #f0a0b0;
+  --rose-gold:    #e8b4b8;
+
+  /* === Accent Golds === */
+  --gold-dark:    #b8860b;
+  --gold:         #d4a574;
+  --gold-bright:  #ffd700;
+  --gold-light:   #ffe4b5;
+
+  /* === Warm Neutrals === */
+  --cream:        #fff5ee;
+  --white-warm:   #fff8f0;
+  --white-soft:   rgba(255, 248, 240, 0.85);
+
+  /* === Envelope === */
+  --envelope-body:   linear-gradient(145deg, #f5e6d3 0%, #ecdcc8 50%, #e8d1b8 100%);
+  --envelope-flap:   linear-gradient(180deg, #f0dcc6 0%, #e5ccb0 100%);
+  --envelope-liner:  linear-gradient(135deg, #d4a574 0%, #c9506b 50%, #8b2252 100%);
+  --envelope-shadow: rgba(10, 0, 21, 0.5);
+
+  /* === Wax Seal === */
+  --wax-bright:   #a52020;
+  --wax-main:     #8b1a1a;
+  --wax-dark:     #5c1010;
+  --wax-shine:    rgba(255, 200, 200, 0.3);
+
+  /* === Glass Card === */
+  --glass-bg:     rgba(255, 245, 238, 0.08);
+  --glass-border: rgba(212, 165, 116, 0.35);
+  --glass-shine:  rgba(255, 255, 255, 0.05);
+
+  /* === Timing Anchors (used by JS) === */
+  --duration-cinema:    0.8s;
+  --duration-flap:      1.8s;
+  --duration-letter:    1.5s;
+  --duration-seal:      0.6s;
+
+  /* === Custom Easings === */
+  --ease-silk:      cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-bounce:    cubic-bezier(0.68, -0.15, 0.265, 1.35);
+  --ease-dramatic:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-breathe:   cubic-bezier(0.45, 0, 0.55, 1);
+
+  /* === Z-Index Layers === */
+  --z-bg:         1;
+  --z-aurora:     2;
+  --z-particles:  3;
+  --z-petals:     4;
+  --z-hearts:     5;
+  --z-garden:     6;
+  --z-stage:      10;
+  --z-envelope:   2;
+  --z-letter:     3;
+  --z-cinema:     50;
+  --z-vignette:   51;
+  --z-cursor:     100;
+}

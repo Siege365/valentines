@@ -1,0 +1,282 @@
+/* ============================================
+   FLOWERS — Rose blooms, growing stems,
+   unfurling leaves, botanical garden reveal
+   ============================================ */
+
+/* Garden container is defined in layout.css */
+
+/* === Single Rose Stem === */
+.rose-stem {
+  position: absolute;
+  bottom: 0;
+  width: 3px;
+  height: 0;
+  background: linear-gradient(to top, #2d5a27, #3a7a32, #4a8a42);
+  border-radius: 2px;
+  transform-origin: bottom center;
+  transition: height 2.5s var(--ease-dramatic);
+  opacity: 0;
+}
+
+.rose-stem.is-growing {
+  opacity: 1;
+}
+
+/* Stem thorns */
+.rose-stem__thorn {
+  position: absolute;
+  width: 6px;
+  height: 3px;
+  background: #3a6a30;
+  border-radius: 0 50% 50% 0;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-silk);
+}
+
+.rose-stem__thorn--left {
+  left: -5px;
+  transform: rotate(30deg);
+  border-radius: 50% 0 0 50%;
+}
+
+.rose-stem__thorn--right {
+  right: -5px;
+  transform: rotate(-30deg);
+}
+
+.rose-stem.is-growing .rose-stem__thorn {
+  opacity: 0.7;
+}
+
+/* === Rose Leaf === */
+.rose-leaf {
+  position: absolute;
+  width: 28px;
+  height: 16px;
+  opacity: 0;
+  transform: scale(0) rotate(var(--leaf-angle, -30deg));
+  transition: 
+    opacity 0.8s var(--ease-silk),
+    transform 1.2s var(--ease-bounce);
+}
+
+.rose-leaf.is-unfurled {
+  opacity: 1;
+  transform: scale(1) rotate(var(--leaf-angle, -30deg));
+}
+
+.rose-leaf__shape {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #3a8a3a 0%, #2d6a27 50%, #246020 100%);
+  border-radius: 0 80% 0 80%;
+  box-shadow: inset -2px -1px 3px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+/* Leaf vein */
+.rose-leaf__shape::after {
+  content: '';
+  position: absolute;
+  top: 45%;
+  left: 10%;
+  width: 70%;
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  transform: rotate(-5deg);
+}
+
+.rose-leaf--mirror .rose-leaf__shape {
+  border-radius: 80% 0 80% 0;
+  transform: scaleX(-1);
+}
+
+/* === Rose Bloom === */
+.rose-bloom {
+  position: absolute;
+  width: var(--bloom-size, 44px);
+  height: var(--bloom-size, 44px);
+  transform: translate(-50%, -50%);
+}
+
+.rose-bloom__center {
+  position: absolute;
+  inset: 30%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f0d060 0%, #d4a030 70%);
+  z-index: 5;
+  opacity: 0;
+  transform: scale(0);
+  transition: 
+    opacity 0.5s var(--ease-silk) 1.5s,
+    transform 0.6s var(--ease-bounce) 1.5s;
+}
+
+.rose-bloom.is-blooming .rose-bloom__center {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* === Individual Petals === */
+.rose-petal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  transform-origin: 0% 100%;
+  opacity: 0;
+  transform: rotate(var(--petal-angle, 0deg)) scale(0);
+  transition: 
+    opacity 0.6s var(--ease-silk),
+    transform 1s var(--ease-bounce);
+}
+
+.rose-bloom.is-blooming .rose-petal {
+  opacity: 1;
+  transform: rotate(var(--petal-angle, 0deg)) scale(1);
+}
+
+/* Stagger each petal */
+.rose-petal:nth-child(1)  { transition-delay: 0.3s; }
+.rose-petal:nth-child(2)  { transition-delay: 0.45s; }
+.rose-petal:nth-child(3)  { transition-delay: 0.6s; }
+.rose-petal:nth-child(4)  { transition-delay: 0.75s; }
+.rose-petal:nth-child(5)  { transition-delay: 0.9s; }
+.rose-petal:nth-child(6)  { transition-delay: 1.05s; }
+.rose-petal:nth-child(7)  { transition-delay: 1.2s; }
+.rose-petal:nth-child(8)  { transition-delay: 1.35s; }
+
+.rose-petal__shape {
+  width: 100%;
+  height: 100%;
+  border-radius: 50% 50% 10% 50%;
+  background: var(--petal-color, #e0455a);
+  box-shadow:
+    inset -2px -2px 6px rgba(0,0,0,0.15),
+    inset 2px 2px 6px rgba(255,255,255,0.12);
+}
+
+/* Inner petal layer (smaller, lighter) */
+.rose-petal--inner .rose-petal__shape {
+  background: var(--petal-inner, #f06878);
+  box-shadow:
+    inset -1px -1px 4px rgba(0,0,0,0.1),
+    inset 1px 1px 4px rgba(255,255,255,0.15);
+}
+
+/* === Flower Glow Halo === */
+.rose-bloom::before {
+  content: '';
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--bloom-glow, rgba(224,69,90,0.15)), transparent 70%);
+  opacity: 0;
+  transition: opacity 1s var(--ease-silk) 1.5s;
+  pointer-events: none;
+}
+
+.rose-bloom.is-blooming::before {
+  opacity: 1;
+  animation: bloomPulse 3s var(--ease-breathe) infinite alternate;
+}
+
+@keyframes bloomPulse {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.2); opacity: 0.3; }
+}
+
+/* === Baby's Breath (small filler flowers) === */
+.babys-breath {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  opacity: 0;
+  transform: scale(0);
+  transition: 
+    opacity 0.5s var(--ease-silk),
+    transform 0.6s var(--ease-bounce);
+}
+
+.babys-breath.is-visible {
+  opacity: 0.7;
+  transform: scale(1);
+}
+
+.babys-breath__dot {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 30%, rgba(240,220,255,0.6) 100%);
+  box-shadow: 0 0 6px rgba(255,255,255,0.3);
+}
+
+/* === Vine Tendril === */
+.vine-tendril {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 2px solid transparent;
+  border-top-color: #3a7a32;
+  border-right-color: #3a7a32;
+  border-radius: 0 50% 0 0;
+  opacity: 0;
+  transform: scale(0);
+  transition: 
+    opacity 0.8s var(--ease-silk),
+    transform 1s var(--ease-bounce);
+}
+
+.vine-tendril.is-growing {
+  opacity: 0.5;
+  transform: scale(1);
+}
+
+/* === Flower close/retract transition === */
+.rose-stem.is-retracting {
+  height: 0 !important;
+  opacity: 0;
+  transition: 
+    height 1.5s var(--ease-silk),
+    opacity 1s var(--ease-silk);
+}
+
+.rose-bloom.is-closing .rose-petal {
+  transform: rotate(var(--petal-angle, 0deg)) scale(0);
+  opacity: 0;
+  transition: 
+    transform 0.6s var(--ease-silk),
+    opacity 0.4s var(--ease-silk);
+}
+
+.rose-bloom.is-closing .rose-bloom__center {
+  transform: scale(0);
+  opacity: 0;
+  transition: 
+    transform 0.3s var(--ease-silk),
+    opacity 0.3s var(--ease-silk);
+}
+
+.rose-leaf.is-retracting {
+  transform: scale(0) rotate(var(--leaf-angle, -30deg));
+  opacity: 0;
+  transition: 
+    transform 0.6s var(--ease-silk),
+    opacity 0.4s var(--ease-silk);
+}
+
+/* === Responsive flower sizing === */
+@media (max-width: 768px) {
+  .rose-stem { width: 2px; }
+  .rose-leaf { width: 22px; height: 12px; }
+}
+
+@media (max-width: 480px) {
+  .rose-stem { width: 2px; }
+  .rose-leaf { width: 18px; height: 10px; }
+}
+
+@media (max-height: 500px) {
+  .rose-leaf { width: 16px; height: 9px; }
+}

@@ -1,0 +1,200 @@
+/* ============================================
+   LAYOUT — Scene container, background, aurora,
+   cinema bars, vignette
+   ============================================ */
+
+/* === Scene Root === */
+.scene {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--midnight);
+  overflow: hidden;
+}
+
+/* === Background Gradient (breathes to life) === */
+.scene__bg {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-bg);
+  background: 
+    radial-gradient(ellipse at 20% 80%, rgba(107, 29, 58, 0.4) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(45, 27, 78, 0.5) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 50%, rgba(139, 34, 82, 0.2) 0%, transparent 70%),
+    linear-gradient(180deg, var(--midnight) 0%, var(--deep-plum) 40%, #1a0a2e 100%);
+  opacity: 0;
+  transition: opacity 3s var(--ease-silk);
+}
+
+.scene.act-reveal .scene__bg {
+  opacity: 1;
+}
+
+/* Background breathing animation */
+.scene__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 70%, rgba(201, 80, 107, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 30%, rgba(212, 165, 116, 0.1) 0%, transparent 50%);
+  animation: bgBreathe 8s var(--ease-breathe) infinite alternate;
+  opacity: 0.5;
+}
+
+@keyframes bgBreathe {
+  0%   { transform: scale(1); opacity: 0.3; }
+  50%  { transform: scale(1.1); opacity: 0.6; }
+  100% { transform: scale(1.05); opacity: 0.4; }
+}
+
+/* === Aurora Waves === */
+.aurora {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-aurora);
+  opacity: 0;
+  transition: opacity 4s var(--ease-silk);
+  pointer-events: none;
+}
+
+.scene.act-reveal .aurora {
+  opacity: 1;
+}
+
+.aurora__wave {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  border-radius: 40%;
+  mix-blend-mode: screen;
+  opacity: 0.12;
+  filter: blur(80px);
+}
+
+.aurora__wave--1 {
+  top: -60%;
+  left: -30%;
+  background: radial-gradient(ellipse, var(--rose-deep), transparent 70%);
+  animation: auroraFloat1 12s var(--ease-breathe) infinite alternate;
+}
+
+.aurora__wave--2 {
+  top: -40%;
+  right: -50%;
+  background: radial-gradient(ellipse, var(--royal-plum), transparent 70%);
+  animation: auroraFloat2 15s var(--ease-breathe) infinite alternate;
+}
+
+.aurora__wave--3 {
+  bottom: -70%;
+  left: -20%;
+  background: radial-gradient(ellipse, var(--gold-dark), transparent 70%);
+  animation: auroraFloat3 18s var(--ease-breathe) infinite alternate;
+  opacity: 0.08;
+}
+
+@keyframes auroraFloat1 {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(5%, 3%) rotate(10deg); }
+}
+
+@keyframes auroraFloat2 {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-4%, 5%) rotate(-8deg); }
+}
+
+@keyframes auroraFloat3 {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(3%, -4%) rotate(5deg); }
+}
+
+/* === Cinematic Letterbox Bars === */
+.cinema-bar {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 14%;
+  background: #000;
+  z-index: var(--z-cinema);
+  transition: transform 2s var(--ease-dramatic);
+}
+
+.cinema-bar--top {
+  top: 0;
+  transform-origin: top center;
+}
+
+.cinema-bar--bottom {
+  bottom: 0;
+  transform-origin: bottom center;
+}
+
+.scene.act-reveal .cinema-bar--top {
+  transform: scaleY(0);
+}
+
+.scene.act-reveal .cinema-bar--bottom {
+  transform: scaleY(0);
+}
+
+/* === Vignette === */
+.vignette {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-vignette);
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(6, 0, 15, 0.4) 70%,
+    rgba(6, 0, 15, 0.85) 100%
+  );
+}
+
+/* === Canvas Layer === */
+#particleCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-particles);
+  pointer-events: none;
+}
+
+/* === Stage (center content area) === */
+.stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-stage);
+  perspective: 1200px;
+}
+
+/* === Petal / Heart / Cursor containers === */
+.petals-container,
+.hearts-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.petals-container { z-index: var(--z-petals); }
+.hearts-container { z-index: var(--z-hearts); }
+
+.garden {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-garden);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cursor-trail {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+}
