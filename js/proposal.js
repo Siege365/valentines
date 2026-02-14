@@ -7,6 +7,7 @@ const Proposal = (() => {
   let dodgeCount = 0;
   let answered = false;
   let onYesCallback = null;
+  let originalParent = null;
 
   const TAUNT_TEXTS = [
     'No',
@@ -33,6 +34,7 @@ const Proposal = (() => {
     noBtn         = opts.noBtn;
     celebrationEl = opts.celebrationEl;
     onYesCallback = opts.onYes || null;
+    originalParent = proposalEl; // Store original parent for the No button
 
     // Yes handler
     yesBtn.addEventListener('click', (e) => {
@@ -71,9 +73,12 @@ const Proposal = (() => {
   function hide() {
     proposalEl.classList.remove('is-visible');
     proposalEl.classList.add('is-answered');
-    // Reset the No button
+    // Reset the No button and move back to original parent
     noBtn.classList.remove('is-dodging');
     noBtn.style.cssText = '';
+    if (noBtn.parentElement !== originalParent) {
+      originalParent.appendChild(noBtn);
+    }
     dodgeCount = 0;
   }
 
@@ -88,6 +93,11 @@ const Proposal = (() => {
   function dodgeNo() {
     if (answered) return;
     dodgeCount++;
+
+    // On first dodge, move button to body so it escapes the transformed .letter container
+    if (dodgeCount === 1) {
+      document.body.appendChild(noBtn);
+    }
 
     // Change to fixed positioning so it escapes the letter card
     noBtn.classList.add('is-dodging');
