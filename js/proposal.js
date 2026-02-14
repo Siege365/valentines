@@ -21,6 +21,7 @@ const Proposal = (() => {
     '🥺',
     'Just say yes!',
     'Gara ay?!',
+    'hard to get yarn?',
     'SUGOT BA!',
     'kinsa raman gud ko :<',
     'K',
